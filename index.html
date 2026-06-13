@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📐 رياضيات 12 عام - حل المعادلات المثلثية وSAT/ACT</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+        .correct { background-color: #dcfce7 !important; border-color: #16a34a !important; }
+        .incorrect { background-color: #fee2e2 !important; border-color: #dc2626 !important; }
+        .formula { font-family: 'Times New Roman', serif; font-style: italic; direction: ltr; display: inline-block; }
+        .timer-warning { color: #dc2626 !important; animation: pulse 1s infinite; }
+        @keyframes pulse { 50% { opacity: 0.7; } }
+        @media print { .no-print { display: none !important; } }
+        .success-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 0.875rem; }
+        .grade-excellent { background: #dcfce7; color: #166534; }
+        .grade-good { background: #fef3c7; color: #92400e; }
+        .grade-pass { background: #dbeafe; color: #1e40af; }
+        .grade-fail { background: #fee2e2; color: #991b1b; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 p-4 md:p-8 min-h-screen">
+
+    <!-- Timer -->
+    <div id="timer-container" class="max-w-4xl mx-auto mb-4 text-center no-print">
+        <div class="bg-white p-4 rounded-xl shadow-md inline-block border-2 border-teal-100">
+            <span class="text-gray-600 ml-2">⏱️ الوقت المتبقي:</span>
+            <span id="timer" class="text-2xl font-bold text-teal-600 font-mono">45:00</span>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="max-w-4xl mx-auto mb-6 flex flex-wrap gap-3 justify-center no-print">
+        <button onclick="toggleAnswers()" class="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer">
+            👁️ إظهار / إخفاء الإجابات
+        </button>
+        <button onclick="window.print()" class="bg-gray-800 hover:bg-gray-900 text-white px-5 py-2 rounded-lg font-medium transition shadow cursor-pointer">
+            🖨️ طباعة / PDF
+        </button>
+    </div>
+
+    <!-- Header -->
+    <header class="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-md mb-8 border-r-4 border-teal-600">
+        <div class="text-center">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-2">📐 رياضيات الصف الثاني عشر عام</h1>
+            <h2 class="text-lg text-teal-600 font-semibold">حل المعادلات المثلثية وتطبيقات SAT/ACT</h2>
+            <p class="text-sm text-gray-600 mt-2">Trig Equations, Physics Applications & Comprehensive SAT/ACT</p>
+        </div>
+        <div class="mt-4 flex flex-wrap justify-center gap-4 text-sm text-gray-600">
+            <span>📅 التاريخ: <input type="text" class="border-b border-gray-400 bg-transparent w-28 text-center"></span>
+            <span>👤 الاسم: <input type="text" id="studentName" class="border-b border-gray-400 bg-transparent w-32 text-center" placeholder="أدخل الاسم"></span>
+            <span>🏫 الشعبة: <input type="text" id="studentClass" class="border-b border-gray-400 bg-transparent w-28 text-center" placeholder="الفصل"></span>
+            <span>⏱️ المدة: 45 دقيقة</span>
+            <span>📊 المجموع: 100 درجة</span>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto space-y-8">
+
+        <!-- Section 1: Solving Trig Equations -->
+        <section class="bg-white p-6 rounded-xl shadow-lg">
+            <h2 class="text-xl font-bold mb-4 text-teal-700">🔹 الجزء الأول: حل المعادلات المثلثية</h2>
+            <ol id="section1-list" class="space-y-4 text-sm">
+                <li class="border-r-4 border-teal-500 pr-4 py-2" id="q-1">
+                    <strong>1.</strong> عند حل المعادلة <span class="formula">sin θ cos θ - cos θ = 0</span> بالتحليل، نأخذ العامل المشترك:<br>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q1" value="a" class="ml-2"> أ) <span class="formula">sin θ</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q1" value="b" class="ml-2"> ب) <span class="formula">cos θ</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q1" value="c" class="ml-2"> ج) <span class="formula">tan θ</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q1" value="d" class="ml-2"> د) <span class="formula">1</span></label>
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">✅ الإجابة: ب) نخرج cos θ كعامل مشترك لتصبح cos θ(sin θ - 1/2) = 0</div>
+                </li>
+                <li class="border-r-4 border-teal-500 pr-4 py-2" id="q-2">
+                    <strong>2.</strong> لتوحيد الدوال في معادلة تحتوي على sin²θ و cos θ، نعوض بـ:<br>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q2" value="a" class="ml-2"> أ) <span class="formula">sin²θ = 1 + cos²θ</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q2" value="b" class="ml-2"> ب) <span class="formula">sin²θ = 1 - cos²θ</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q2" value="c" class="ml-2"> ج) <span class="formula">cos²θ = 1 + sin²θ</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q2" value="d" class="ml-2"> د) <span class="formula">sin θ = √(1 - cos θ)</span></label>
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">✅ الإجابة: ب) من متطابقة فيثاغورس: sin²θ + cos²θ = 1 → sin²θ = 1 - cos²θ</div>
+                </li>
+                <li class="border-r-4 border-teal-500 pr-4 py-2" id="q-3">
+                    <strong>3.</strong> إذا نتج عن الحل قيمة <span class="formula">cos θ = 3/2</span>، فإن هذا الحل:<br>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q3" value="a" class="ml-2"> أ) مقبول ويعطي زاوية حادة</label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q3" value="b" class="ml-2"> ب) مرفوض لأنه خارج مجال [-1, 1]</label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q3" value="c" class="ml-2"> ج) مقبول ويعطي زاوية منفرجة</label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q3" value="d" class="ml-2"> د) يحتاج إلى آلة حاسبة</label>
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">✅ الإجابة: ب) قيم cos محصورة بين -1 و 1، لذا 3/2 مرفوض</div>
+                </li>
+                <li class="border-r-4 border-teal-500 pr-4 py-2" id="q-4">
+                    <strong>4.</strong> عند تربيع طرفي معادلة مثلثية، يجب التحقق من الحلول لأن:<br>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q4" value="a" class="ml-2"> أ) التربيع يزيد عدد الحلول دائماً</label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q4" value="b" class="ml-2"> ب) قد تظهر حلول غريبة لا تحقق المعادلة الأصلية</label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q4" value="c" class="ml-2"> ج) التربيع يلغي الزوايا السالبة</label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q4" value="d" class="ml-2"> د) لا حاجة للتحقق</label>
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">✅ الإجابة: ب) التربيع قد يُنتج حلولاً إضافية يجب استبعادها بالتعويض</div>
+                </li>
+            </ol>
+        </section>
+
+        <!-- Section 2: Physics Applications -->
+        <section class="bg-white p-6 rounded-xl shadow-lg">
+            <h2 class="text-xl font-bold mb-4 text-teal-700">🔹 الجزء الثاني: التطبيقات الفيزيائية (الحركة الدورية)</h2>
+            <ol id="section2-list" class="space-y-4 text-sm">
+                <li class="border-r-4 border-teal-500 pr-4 py-2" id="q-5">
+                    <strong>5.</strong> في معادلة الحركة الدورية <span class="formula">h = 21 - 20 cos(3πt)</span>، يمثل الرقم 21:<br>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q5" value="a" class="ml-2"> أ) السعة (Amplitude)</label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q5" value="b" class="ml-2"> ب) خط الاتزان (Midline)</label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q5" value="c" class="ml-2"> ج) الدور (Period)</label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q5" value="d" class="ml-2"> د) التردد</label>
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">✅ الإجابة: ب) الثابت المضاف يمثل خط الاتزان أو المتوسط</div>
+                </li>
+                <li class="border-r-4 border-teal-500 pr-4 py-2" id="q-6">
+                    <strong>6.</strong> لإيجاد الزمن t عندما يكون h = 1 في المعادلة السابقة، نحل المعادلة:<br>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q6" value="a" class="ml-2"> أ) <span class="formula">1 = 21 - 20 cos(3πt)</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q6" value="b" class="ml-2"> ب) <span class="formula">1 = 21 + 20 cos(3πt)</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q6" value="c" class="ml-2"> ج) <span class="formula">21 = 1 - 20 cos(3πt)</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q6" value="d" class="ml-2"> د) <span class="formula">20 = 21 cos(3πt)</span></label>
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">✅ الإجابة: أ) نعوض h = 1 في المعادلة الأصلية</div>
+                </li>
+                <li class="border-r-4 border-teal-500 pr-4 py-2" id="q-7">
+                    <strong>7.</strong> بعد تبسيط المعادلة <span class="formula">1 = 21 - 20 cos(3πt)</span>، نحصل على:<br>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q7" value="a" class="ml-2"> أ) <span class="formula">cos(3πt) = -1</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q7" value="b" class="ml-2"> ب) <span class="formula">cos(3πt) = 0</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q7" value="c" class="ml-2"> ج) <span class="formula">cos(3πt) = 1</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q7" value="d" class="ml-2"> د) <span class="formula">cos(3πt) = 1/2</span></label>
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">✅ الإجابة: ج) -20 = -20 cos(3πt) → cos(3πt) = 1</div>
+                </li>
+                <li class="border-r-4 border-teal-500 pr-4 py-2" id="q-8">
+                    <strong>8.</strong> أقل زمن موجب t يحقق <span class="formula">cos(3πt) = 1</span> هو:<br>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q8" value="a" class="ml-2"> أ) <span class="formula">t = 1/3</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q8" value="b" class="ml-2"> ب) <span class="formula">t = 2/3</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q8" value="c" class="ml-2"> ج) <span class="formula">t = 1</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q8" value="d" class="ml-2"> د) <span class="formula">t = 0</span></label>
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">✅ الإجابة: ب) 3πt = 2kπ → t = 2k/3، لأقل زمن موجب k=1 → t=2/3</div>
+                </li>
+            </ol>
+        </section>
+
+        <!-- Section 3: SAT/ACT Composite & Sequences -->
+        <section class="bg-white p-6 rounded-xl shadow-lg">
+            <h2 class="text-xl font-bold mb-4 text-teal-700">🔹 الجزء الثالث: SAT/ACT - الدوال العكسية والمتتاليات</h2>
+            <ol id="section3-list" class="space-y-4 text-sm">
+                <li class="border-r-4 border-teal-500 pr-4 py-2" id="q-9">
+                    <strong>9.</strong> قيمة <span class="formula">sin(sin⁻¹(x))</span> تساوي:<br>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q9" value="a" class="ml-2"> أ) <span class="formula">1</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q9" value="b" class="ml-2"> ب) <span class="formula">x</span> (لـ -1 ≤ x ≤ 1)</label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q9" value="c" class="ml-2"> ج) <span class="formula">√(1-x²)</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q9" value="d" class="ml-2"> د) <span class="formula">غير معرفة</span></label>
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">✅ الإجابة: ب) الدالة وعكسها تلغيان بعضهما ضمن المجال</div>
+                </li>
+                <li class="border-r-4 border-teal-500 pr-4 py-2" id="q-10">
+                    <strong>10.</strong> لحساب <span class="formula">cos(sin⁻¹(x))</span>، نستخدم مثلثاً قائماً حيث المقابل = x والوتر = 1، فيكون المجاور:<br>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q10" value="a" class="ml-2"> أ) <span class="formula">x</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q10" value="b" class="ml-2"> ب) <span class="formula">1 - x²</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q10" value="c" class="ml-2"> ج) <span class="formula">√(1 - x²)</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q10" value="d" class="ml-2"> د) <span class="formula">√(1 + x²)</span></label>
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">✅ الإجابة: ج) حسب فيثاغورس: المجاور = √(الوتر² - المقابل²)</div>
+                </li>
+                <li class="border-r-4 border-teal-500 pr-4 py-2" id="q-11">
+                    <strong>11.</strong> صيغة مجموع المتتالية الحسابية <span class="formula">Sₙ</span> هي:<br>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q11" value="a" class="ml-2"> أ) <span class="formula">n(a₁ + aₙ)/2</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q11" value="b" class="ml-2"> ب) <span class="formula">n(a₁ - aₙ)/2</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q11" value="c" class="ml-2"> ج) <span class="formula">a₁ + (n-1)d</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q11" value="d" class="ml-2"> د) <span class="formula">n × d</span></label>
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">✅ الإجابة: أ) Sₙ = n/2 (a₁ + aₙ)</div>
+                </li>
+                <li class="border-r-4 border-teal-500 pr-4 py-2" id="q-12">
+                    <strong>12.</strong> إذا كان <span class="formula">a₁ = -13, aₙ = 427, Sₙ = 18423</span>، فإن عدد الحدود n يساوي:<br>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q12" value="a" class="ml-2"> أ) 79</label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q12" value="b" class="ml-2"> ب) 89</label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q12" value="c" class="ml-2"> ج) 99</label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q12" value="d" class="ml-2"> د) 109</label>
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">✅ الإجابة: ب) 18423 = n/2(-13+427) → 18423 = 207n → n = 89</div>
+                </li>
+            </ol>
+        </section>
+
+        <!-- Section 4: Cofunction Identities & Algebraic Evaluation -->
+        <section class="bg-white p-6 rounded-xl shadow-lg">
+            <h2 class="text-xl font-bold mb-4 text-teal-700">🔹 الجزء الرابع: متطابقات الزوايا المتممة والتقييم الجبري</h2>
+            <ol id="section4-list" class="space-y-4 text-sm">
+                <li class="border-r-4 border-teal-500 pr-4 py-2" id="q-13">
+                    <strong>13.</strong> وفقاً لمتطابقات الزوايا المتممة، <span class="formula">cos(90° - θ)</span> تساوي:<br>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q13" value="a" class="ml-2"> أ) <span class="formula">-sin θ</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q13" value="b" class="ml-2"> ب) <span class="formula">sin θ</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q13" value="c" class="ml-2"> ج) <span class="formula">cos θ</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q13" value="d" class="ml-2"> د) <span class="formula">-cos θ</span></label>
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">✅ الإجابة: ب) cos(90° - θ) = sin θ</div>
+                </li>
+                <li class="border-r-4 border-teal-500 pr-4 py-2" id="q-14">
+                    <strong>14.</strong> قيمة <span class="formula">sin(270° - θ)</span> تساوي:<br>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q14" value="a" class="ml-2"> أ) <span class="formula">cos θ</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q14" value="b" class="ml-2"> ب) <span class="formula">-cos θ</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q14" value="c" class="ml-2"> ج) <span class="formula">sin θ</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q14" value="d" class="ml-2"> د) <span class="formula">-sin θ</span></label>
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">✅ الإجابة: ب) في الربع الثالث sin سالبة، والدالة تتحول لـ cos</div>
+                </li>
+                <li class="border-r-4 border-teal-500 pr-4 py-2" id="q-15">
+                    <strong>15.</strong> إذا كانت <span class="formula">f(x) = x⁴ + 10x² + x + 8</span>، فإن <span class="formula">f(-2)</span> تساوي:<br>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q15" value="a" class="ml-2"> أ) <span class="formula">54</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q15" value="b" class="ml-2"> ب) <span class="formula">62</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q15" value="c" class="ml-2"> ج) <span class="formula">70</span></label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q15" value="d" class="ml-2"> د) <span class="formula">46</span></label>
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">✅ الإجابة: ب) (-2)⁴ + 10(-2)² + (-2) + 8 = 16 + 40 - 2 + 8 = 62</div>
+                </li>
+                <li class="border-r-4 border-teal-500 pr-4 py-2" id="q-16">
+                    <strong>16.</strong> النصيحة الذهبية عند رؤية tan⁴θ و sec²θ في نفس المعادلة هي:<br>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q16" value="a" class="ml-2"> أ) تحويل كل شيء إلى sin و cos</label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q16" value="b" class="ml-2"> ب) استخدام sec²θ = 1 + tan²θ لتحويل المعادلة كلها إلى tan</label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q16" value="c" class="ml-2"> ج) تربيع الطرفين</label>
+                    <label class="mr-4 cursor-pointer block mt-1"><input type="radio" name="q16" value="d" class="ml-2"> د) التحليل بإخراج عامل مشترك</label>
+                    <div class="answer-box text-green-700 mt-2 font-medium hidden">✅ الإجابة: ب) التحويل لـ tan يجعلها معادلة تربيعية سهلة الحل</div>
+                </li>
+            </ol>
+        </section>
+
+        <!-- Submit Button -->
+        <div class="text-center no-print pb-8">
+            <button onclick="gradeExam()" class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white text-lg px-10 py-4 rounded-xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer">
+                📝 تسليم وتصحيح الامتحان
+            </button>
+        </div>
+    </main>
+
+    <!-- Results Panel -->
+    <div id="results-panel" class="max-w-4xl mx-auto mt-8 bg-white p-8 rounded-2xl shadow-2xl border-t-4 border-emerald-500 hidden no-print">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6 text-center">📊 نتائج الامتحان</h2>
+        <div class="grid md:grid-cols-3 gap-4 mb-6">
+            <div class="bg-blue-50 p-4 rounded-xl text-center"><p>اسم الطالب</p><p id="res-name" class="font-bold text-xl text-teal-700">-</p></div>
+            <div class="bg-purple-50 p-4 rounded-xl text-center"><p>التاريخ</p><p id="res-date" class="font-bold text-xl text-purple-700">-</p></div>
+            <div class="bg-emerald-50 p-4 rounded-xl text-center"><p>المجموع</p><p id="res-total" class="font-bold text-3xl text-emerald-600">0 / 100</p></div>
+        </div>
+
+        <div class="text-center mb-6">
+            <span id="success-badge" class="success-badge grade-excellent">ممتاز - 100%</span>
+            <p id="success-percent" class="text-4xl font-bold text-emerald-600 mt-2">100%</p>
+            <p class="text-sm text-gray-500">نسبة النجاح</p>
+        </div>
+
+        <div class="bg-gray-50 p-6 rounded-xl mb-6">
+            <h3 class="font-bold text-lg mb-4 text-gray-800">📈 تفصيل الأداء حسب القسم:</h3>
+            <div class="space-y-3">
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700">حل المعادلات المثلثية</span>
+                    <span id="sec1-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700">التطبيقات الفيزيائية</span>
+                    <span id="sec2-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700">SAT: الدوال العكسية والمتتاليات</span>
+                    <span id="sec3-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+                <div class="flex justify-between items-center">
+                    <span class="text-gray-700">الزوايا المتممة والتقييم الجبري</span>
+                    <span id="sec4-score" class="font-bold text-teal-600">0/4</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mb-6">
+            <button id="sendEmailBtn" onclick="sendResultsToEmail()" class="bg-gradient-to-r from-teal-600 to-cyan-600 hover:from-teal-700 hover:to-cyan-700 text-white text-lg px-8 py-3 rounded-xl font-bold shadow-xl transition transform hover:scale-105 cursor-pointer">
+                📧 إرسال النتائج للمعلم
+            </button>
+            <p id="emailStatus" class="text-sm mt-2 text-center font-medium"></p>
+        </div>
+
+        <div class="flex gap-3 justify-center">
+            <button onclick="window.print()" class="bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold">🖨️ طباعة النتائج</button>
+        </div>
+    </div>
+
+    <footer class="max-w-4xl mx-auto mt-10 mb-8 text-center text-gray-500 text-sm no-print">
+        © الرياضيات للصف الثاني عشر عام | حل المعادلات المثلثية وSAT/ACT | Mr. Mohammed Hesham
+    </footer>
+
+    <script>
+        const PUBLIC_KEY = "Rb3Lq8tXaFmc5YHUH";
+        const SERVICE_ID = "service_w15m64i";
+        const TEMPLATE_ID = "template_5b0u2tq";
+        const TARGET_EMAIL = "mohammedhesham872@gmail.com";
+        (function(){ emailjs.init(PUBLIC_KEY); })();
+
+        let timeRemaining = 2700;
+        let timerInterval;
+
+        function startTimer() {
+            document.getElementById('timer-container').style.display = 'block';
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                const minutes = Math.floor(timeRemaining / 60);
+                const seconds = timeRemaining % 60;
+                const timerEl = document.getElementById('timer');
+                timerEl.textContent = `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+                if (timeRemaining <= 300) timerEl.classList.add('timer-warning');
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    alert("انتهى الوقت! سيتم تسليم الامتحان تلقائياً.");
+                    gradeExam();
+                }
+            }, 1000);
+        }
+
+        function toggleAnswers() {
+            document.querySelectorAll('.answer-box').forEach(el => el.classList.toggle('hidden'));
+        }
+
+        function gradeExam() {
+            let correctCount = 0;
+            const correctAnswers = [
+                'b','b','b','b',  // Q1-4: Trig Equations
+                'b','a','c','b',  // Q5-8: Physics
+                'b','c','a','b',  // Q9-12: SAT Inverse & Sequences
+                'b','b','b','b'   // Q13-16: Cofunction & Algebra
+            ];
+
+            let sec1 = 0, sec2 = 0, sec3 = 0, sec4 = 0;
+
+            for(let i=1; i<=16; i++){
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                const li = document.getElementById(`q-${i}`);
+                const isCorrect = selected && selected.value === correctAnswers[i-1];
+                
+                if (isCorrect) {
+                    correctCount++;
+                    li.classList.add('correct');
+                    li.classList.remove('incorrect');
+                    if (i <= 4) sec1++;
+                    else if (i <= 8) sec2++;
+                    else if (i <= 12) sec3++;
+                    else sec4++;
+                } else {
+                    li.classList.add('incorrect');
+                    li.classList.remove('correct');
+                }
+            }
+
+            const score = (correctCount / 16) * 100;
+            const successRate = Math.round(score);
+            
+            document.getElementById('res-total').textContent = `${Math.round(score)} / 100`;
+            document.getElementById('res-name').textContent = document.getElementById('studentName').value || 'طالب';
+            document.getElementById('res-date').textContent = new Date().toLocaleDateString('ar-AE');
+            
+            document.getElementById('sec1-score').textContent = `${sec1}/4`;
+            document.getElementById('sec2-score').textContent = `${sec2}/4`;
+            document.getElementById('sec3-score').textContent = `${sec3}/4`;
+            document.getElementById('sec4-score').textContent = `${sec4}/4`;
+            
+            const badge = document.getElementById('success-badge');
+            const percent = document.getElementById('success-percent');
+            percent.textContent = `${successRate}%`;
+            
+            if(successRate >= 90) { badge.textContent = 'ممتاز'; badge.className = 'success-badge grade-excellent'; }
+            else if(successRate >= 75) { badge.textContent = 'جيد جداً'; badge.className = 'success-badge grade-good'; }
+            else if(successRate >= 50) { badge.textContent = 'جيد'; badge.className = 'success-badge grade-pass'; }
+            else { badge.textContent = 'يحتاج تحسين'; badge.className = 'success-badge grade-fail'; }
+            
+            document.getElementById('results-panel').classList.remove('hidden');
+            document.getElementById('results-panel').scrollIntoView({ behavior: 'smooth' });
+            document.getElementById('sendEmailBtn').classList.remove('hidden');
+        }
+
+        function sendResultsToEmail() {
+            const btn = document.getElementById('sendEmailBtn');
+            const status = document.getElementById('emailStatus');
+            btn.disabled = true;
+            btn.textContent = '⏳ جاري الإرسال...';
+
+            const name = document.getElementById('studentName').value || 'N/A';
+            const studentClass = document.getElementById('studentClass').value || 'غير محدد';
+            const date = document.querySelector('input[type="text"]').value || new Date().toLocaleDateString('ar-AE');
+            const score = document.getElementById('res-total').textContent;
+            const successRate = document.getElementById('success-percent').textContent;
+            const sec1 = document.getElementById('sec1-score').textContent;
+            const sec2 = document.getElementById('sec2-score').textContent;
+            const sec3 = document.getElementById('sec3-score').textContent;
+            const sec4 = document.getElementById('sec4-score').textContent;
+
+            let answersHTML = `<div dir="rtl" style="font-family: 'Cairo', sans-serif;">
+                <h3 style="color:#0d9488;">📊 تفصيل الأداء - امتحان المعادلات المثلثية وSAT/ACT:</h3>
+                <p><strong>الطالب:</strong> ${name} | <strong>الشعبة:</strong> ${studentClass}</p>
+                <ul>
+                    <li>حل المعادلات المثلثية: ${sec1}</li>
+                    <li>التطبيقات الفيزيائية: ${sec2}</li>
+                    <li>SAT: الدوال العكسية والمتتاليات: ${sec3}</li>
+                    <li>الزوايا المتممة والتقييم الجبري: ${sec4}</li>
+                </ul>
+                <table style="border:1px solid #e5e7eb; border-collapse:collapse; width:100%; font-size:14px; direction: rtl;">
+                <tr style="background:#0d9488; color:white;"><th style="border:1px solid #e5e7eb; padding:8px;">السؤال</th><th style="border:1px solid #e5e7eb; padding:8px;">الإجابة المختارة</th><th style="border:1px solid #e5e7eb; padding:8px;">الحالة</th></tr>`;
+            
+            const correctAnswers = ['b','b','b','b','b','a','c','b','b','c','a','b','b','b','b','b'];
+            
+            for(let i=1; i<=16; i++) {
+                const sel = document.querySelector(`input[name="q${i}"]:checked`);
+                const isCorrect = sel && sel.value === correctAnswers[i-1];
+                answersHTML += `<tr><td style="border:1px solid #e5e7eb; padding:6px;">${i}</td><td style="border:1px solid #e5e7eb; padding:6px;">${sel ? sel.value : '-'}</td><td style="border:1px solid #e5e7eb; padding:6px; color:${isCorrect ? 'green' : 'red'}">${isCorrect ? '✅ صحيح' : '❌ خطأ'}</td></tr>`;
+            }
+            answersHTML += '</table></div>';
+
+            const templateParams = {
+                to_email: TARGET_EMAIL,
+                student_name: name,
+                exam_date: date,
+                total_score: score,
+                success_rate: successRate,
+                answers_table: answersHTML
+            };
+
+            emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams)
+                .then(() => {
+                    status.textContent = '✅ تم الإرسال بنجاح! تحقق من Gmail.';
+                    status.style.color = '#059669';
+                    btn.textContent = '✓ تم الإرسال';
+                })
+                .catch(err => {
+                    status.textContent = '❌ فشل الإرسال. تحقق من الإعدادات.';
+                    status.style.color = '#dc2626';
+                    btn.disabled = false;
+                    btn.textContent = '📧 إعادة المحاولة';
+                    console.error('EmailJS Error:', err);
+                });
+        }
+
+        window.addEventListener('DOMContentLoaded', startTimer);
+    </script>
+</body>
+</html>
